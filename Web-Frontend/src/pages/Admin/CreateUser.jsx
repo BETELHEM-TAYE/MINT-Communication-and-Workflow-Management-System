@@ -55,18 +55,6 @@ export default function CreateUser() {
 
 const allPwOk = Object.values(pwRules).every(Boolean);
 
-  // const getPasswordMessage = () => {
-  //   const missing = [];
-  //   if (!passwordRules.length) missing.push("8 characters");
-  //   if (!passwordRules.uppercase) missing.push("1 uppercase letter");
-  //   if (!passwordRules.lowercase) missing.push("1 lowercase letter");
-  //   if (!passwordRules.number) missing.push("1 number");
-  //   if (!passwordRules.symbol) missing.push("1 special symbol");
-  //   return missing.length > 0
-  //     ? `✖️ Must include: ${missing.join(", ")}`
-  //     : "✔️ Password looks good!";
-  // };
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -133,7 +121,6 @@ const allPwOk = Object.values(pwRules).every(Boolean);
                 type: "select",
                 opts: [
                   { v: "", l: "Select account type" },
-                  { v: "admin", l: "Admin" },
                   { v: "manager", l: "Manager" },
                   { v: "staff", l: "Staff" },
                 ],
