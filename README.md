@@ -9,7 +9,7 @@
 
 3. Copy .env.example to .env and fill in your values:
    cp .env.example .env
-
+u only change only the :EMAIL_USER & EMAIL_PASS
 4. Seed the database:
    node Backend/seed.js
 
