@@ -1,6 +1,5 @@
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
 import User from "../models/User.js";
 
 dotenv.config();
@@ -12,29 +11,26 @@ const seed = async () => {
 
     await User.deleteMany({});
 
-    const salt = await bcrypt.genSalt(10);
+    // ✅ Use save() instead of insertMany() so pre('save') hook hashes password
+    const admin = new User({
+      firstName: "System",
+      middleName: "",
+      lastName: "Admin",
+      email: "admin@mint.gov.et",
+      password: "Admin@1234", // ✅ plain text — hook will hash it
+      role: "admin",
+      department: "Minister's Office (ሚኒስትር ፅህፈት ቤት)",
+      gender: "Male",
+      status: "Active",
+      position: "System Administrator",
+      phone: "+251911000001",
+    });
 
-    const users = [
-      {
-        firstName: "System",
-        middleName: "",
-        lastName: "Admin",
-        email: "admin@mint.gov.et",
-        password: "Admin@1234",
-        role: "admin",
-        department: "Minister's Support Staff Unit",
-        gender: "Male",
-        status: "Active",
-        position: "System Administrator",
-        phone: "0911000001",
-      },
-    ];
+    await admin.save(); // ✅ triggers pre('save') hook → hashes password
 
-    await User.insertMany(users);
-
-    console.log(`✅ Seeded ${users.length} users successfully!\n`);
+    console.log("✅ Admin user seeded successfully!\n");
     console.log("📋 Login Credentials:");
-    console.log("Admin   → admin@mint.gov.et  / Admin@1234");
+    console.log("Admin → admin@mint.gov.et / Admin@1234");
 
     await mongoose.disconnect();
     process.exit(0);
